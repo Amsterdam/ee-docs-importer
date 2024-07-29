@@ -1,0 +1,46 @@
+{
+  "name": "ee-react-template",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "start": "vite --host",
+    "build": "npx esbuild ./src/import.ts --bundle --outfile=dist/import.js --platform=node --minify",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint:scripts": "eslint . --ext .ts,.json",
+    "format:scripts": "prettier . --write",
+    "format": "npm run format:scripts",
+    "prepare": "husky",
+    "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/jsdom": "^21.1.6",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "@vitest/coverage-v8": "^1.5.2",
+    "copyfiles": "^2.4.1",
+    "esbuild": "^0.23.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.5.4",
+    "vite": "^5.2.10",
+    "vitest": "^1.5.2"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^3.0.1",
+    "remark": "^15.0.1",
+    "remark-mdx": "^3.0.1",
+    "simple-git": "^3.25.0",
+    "vfile": "^6.0.2",
+    "vfile-message": "^4.0.2",
+    "vfile-reporter": "^8.1.1"
+  }
+}
