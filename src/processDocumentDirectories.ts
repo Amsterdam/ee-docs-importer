@@ -46,7 +46,7 @@ const processDocumentDirectories = async (
           ? path.join(localDir, dirsToRename[dir])
           : path.join(localDir, dir);
 
-        saveFile(dir, file.filename, clonedRepoDir, targetDir);
+        await saveFile(dir, file.filename, clonedRepoDir, targetDir);
       } else {
         invalidFiles[file.filename] = file.error;
       }

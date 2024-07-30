@@ -4,6 +4,7 @@ import processDocumentDirectories from './processDocumentDirectories';
 import outputResults from './output';
 
 const remoteUrl = 'git@github.com:Amsterdam/development-standards.git';
+// TODO take localDir as arg
 const localDir = 'docs';
 const cloneDir = path.join(localDir, 'latest');
 

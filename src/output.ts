@@ -1,5 +1,5 @@
 const output = (errors: { [key: string]: string | undefined }) => {
-  if (errors) {
+  if (Object.keys(errors).length) {
     console.error(
       '⛔ The following documents were skipped due to invalid markup:\n'
     );
