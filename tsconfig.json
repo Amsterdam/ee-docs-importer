@@ -7,5 +7,6 @@
   },
   "files": [
     "src/import.ts"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }
