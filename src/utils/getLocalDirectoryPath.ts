@@ -1,4 +1,4 @@
-import getCommandArgs from './getCommandArgs';
+import getCommandArgs from '../node/getCommandArgs';
 
 const getLocalDirectoryPath = () => {
   const commandArgs = getCommandArgs();

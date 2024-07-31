@@ -1,7 +1,7 @@
 import * as path from 'path';
 import cloneAndCheckout from './git/cloneAndCheckout';
 import processDocumentDirectories from './processDocumentDirectories';
-import outputResults from './output';
+import outputResults from './logger/output';
 import getLocalDirectoryPath from './utils/getLocalDirectoryPath';
 
 const remoteUrl = 'git@github.com:Amsterdam/development-standards.git';

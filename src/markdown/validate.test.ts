@@ -5,8 +5,6 @@ import { reporter } from 'vfile-reporter';
 import { VFileMessage } from 'vfile-message';
 import fixture from '../../test/fixtures/example-00.md?raw';
 
-// TODO file naming + dir structure
-
 describe('validate', () => {
   it('returns valid with valid markdown', async () => {
     vol.fromJSON(
