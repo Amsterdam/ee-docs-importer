@@ -2,43 +2,25 @@
 
 Team responsible: Engineering Enablement team
 
-This starter kit is built on top of Vite 5.x for writing React based applications in TypeScript.
-
 ## Aims of this repo
 
-This repository aims to provide developers with a simple and unopinionated codebase to develop frontend-based React applications with. Simple meaning minimal config and maintenance overheads.
+To produce a Node.js command that copies and save valid markdown documents from the [development-standards repository](https://github.com/Amsterdam/development-standards).
 
 ## Features
 
-- ESLint - scripts linter
-- Stylelint - styles linter
-- Prettier - formatter
-- Vitest - test framework
-- Husky + lint-staged - pre-commit git hook set up for formatting
-
-## How to use this repo?
-
-You can create a repository based on this [repository template](https://github.com/amsterdam/ee-react-template/generate) or simply clone the repository:
-
-```bash
-git clone https://github.com/amsterdam/ee-react-template.git
-cd ee-react-template
-npm i
-```
+This repo uses the [ee-react-template](https://github.com/Amsterdam/ee-react-template/) project template. Any frontend features have been removed.
 
 ### Usage
 
 The starter contains the following scripts:
 
-- `start` - starts dev server
+- `import [dir]` - starts the import; [dir] is optional, replace it with your directory of choice, otherwise it defaults to `docs`
 - `build` - generates the production bundle
 - `test` - starts vitest and runs all tests
 - `test:coverage` - starts vitest and run all tests with code coverage report
 - `lint:scripts` - lint `.ts`, `.tsx` and `.json` files with eslint
-- `lint:styles` - lint `.css` and `.scss` files with stylelint
 - `format:scripts` - format `.ts`, `.html` and `.json` files with prettier
-- `format:styles` - format `.cs` and `.scss` files with stylelint
-- `format` - format all with prettier and stylelint
+- `format` - format all with prettier
 - `prepare` - script for setting up husky pre-commit hook
 - `uninstall-husky` - script for removing husky from repository
 
