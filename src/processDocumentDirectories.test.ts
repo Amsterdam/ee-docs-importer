@@ -1,18 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { fs, vol } from 'memfs';
 import processDocumentDirectories from './processDocumentDirectories';
 import path from 'path';
-
-vi.mock('node:fs', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs;
-});
-vi.mock('node:fs/promises', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs.promises;
-});
 
 describe('processDocumentDirectories', () => {
   it('saves only valid files', async () => {

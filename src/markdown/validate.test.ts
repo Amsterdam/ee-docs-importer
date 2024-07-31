@@ -1,26 +1,13 @@
-import { describe, expect, it, vi } from 'vitest';
-import { fs, vol } from 'memfs';
+import { describe, expect, it } from 'vitest';
+import { vol } from 'memfs';
 import validateFile from './validate';
 import { VFile } from 'vfile';
 import { reporter } from 'vfile-reporter';
 import { VFileMessage } from 'vfile-message';
 import fixture from '../../test/fixtures/example-00.md?raw';
 
-// TODO move mocks to pre-tests hook
 // TODO remove need for vitest imports
 // TODO file naming + dir structure
-// TODO test for import.ts
-
-vi.mock('node:fs', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs;
-});
-vi.mock('node:fs/promises', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs.promises;
-});
 
 describe('validate', () => {
   it('returns valid with valid markdown', async () => {

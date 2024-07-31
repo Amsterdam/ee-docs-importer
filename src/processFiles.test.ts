@@ -1,18 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fs, vol } from 'memfs';
+import { vol } from 'memfs';
 import processFiles from './processFiles';
 import validateFile from './markdown/validate';
-
-vi.mock('node:fs', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs;
-});
-vi.mock('node:fs/promises', async () => {
-  const memfs: { fs: typeof fs } = await vi.importActual('memfs');
-
-  return memfs.fs.promises;
-});
 
 vi.mock('./markdown/validate');
 
