@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "start": "vite --host",
-    "build": "npx esbuild ./src/import.ts --bundle --outfile=dist/import.js --platform=node --minify",
+    "import": "node ./dist/importer.js",
+    "build": "npx esbuild ./src/importer.ts --bundle --outfile=dist/importer.js --platform=node --minify",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
