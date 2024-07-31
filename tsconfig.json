@@ -5,8 +5,6 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "files": [
-    "src/importer.ts"
-  ],
+  "files": ["src/importer.ts"],
   "exclude": ["node_modules"]
 }
