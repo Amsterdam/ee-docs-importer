@@ -17,7 +17,7 @@ vi.mock('./processDocumentDirectories', () => ({
 }));
 
 // Avoid outputting unnecessary console.logs
-vi.mock('./output');
+vi.mock('./logger/output');
 
 describe('importer', () => {
   it('calls cloneAndCheckout with the correct URL and directories', async () => {
