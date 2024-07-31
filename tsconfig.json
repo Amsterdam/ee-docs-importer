@@ -6,7 +6,7 @@
     "allowImportingTsExtensions": true
   },
   "files": [
-    "src/import.ts"
+    "src/importer.ts"
   ],
   "exclude": ["node_modules"]
 }
