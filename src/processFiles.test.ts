@@ -1,4 +1,3 @@
-import { describe, expect, it, vi } from 'vitest';
 import { vol } from 'memfs';
 import processFiles from './processFiles';
 import validateFile from './markdown/validate';

@@ -1,4 +1,3 @@
-import { describe, expect, it, vi } from 'vitest';
 import { app } from './importer';
 
 const { mockedCloneAndCheckout } = vi.hoisted(() => {

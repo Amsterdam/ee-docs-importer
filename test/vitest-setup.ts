@@ -6,6 +6,7 @@ vi.mock('node:fs', async () => {
 
   return memfs.fs;
 });
+
 vi.mock('node:fs/promises', async () => {
   const memfs: { fs: typeof fs } = await vi.importActual('memfs');
 

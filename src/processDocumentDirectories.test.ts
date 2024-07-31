@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { fs, vol } from 'memfs';
 import processDocumentDirectories from './processDocumentDirectories';
 import path from 'path';

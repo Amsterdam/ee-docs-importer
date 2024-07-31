@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { vol } from 'memfs';
 import validateFile from './validate';
 import { VFile } from 'vfile';
@@ -6,7 +5,6 @@ import { reporter } from 'vfile-reporter';
 import { VFileMessage } from 'vfile-message';
 import fixture from '../../test/fixtures/example-00.md?raw';
 
-// TODO remove need for vitest imports
 // TODO file naming + dir structure
 
 describe('validate', () => {
