@@ -10,12 +10,10 @@ const cloneDir = path.join(localDir, 'latest');
 
 export async function app(savePath: string) {
   // Clone the latest development-standards repo
-  await cloneAndCheckout(remoteUrl, cloneDir, 'feature/md-validation').then(
-    async () => {
-      const errors = await processDocumentDirectories(savePath, cloneDir);
-      outputResults(errors);
-    }
-  );
+  await cloneAndCheckout(remoteUrl, cloneDir).then(async () => {
+    const errors = await processDocumentDirectories(savePath, cloneDir);
+    outputResults(errors);
+  });
 }
 
 app(localDir).catch(console.error);
