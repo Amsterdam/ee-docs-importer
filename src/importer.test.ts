@@ -27,8 +27,7 @@ describe('importer', () => {
     // modifying the esbuild command and creating an .env file
     expect(mockedCloneAndCheckout).toHaveBeenCalledWith(
       'git@github.com:Amsterdam/development-standards.git',
-      'docs/latest',
-      'feature/md-validation'
+      'docs/latest'
     );
   });
 });
