@@ -1,10 +1,7 @@
 import * as fs from 'fs';
-import { compile } from '@mdx-js/mdx';
-import { remark } from 'remark';
-import remarkMdx from 'remark-mdx';
 import { VFile } from 'vfile';
-import { reporter } from 'vfile-reporter';
-import { VFileMessage } from 'vfile-message';
+import isMdValid from './isMdValid';
+import isMdxValid from './isMdxValid';
 
 interface FileValidationReport {
   valid: boolean;
@@ -24,20 +21,17 @@ const validateFile = async (
   const fileContent = await fs.promises.readFile(filePath, 'utf-8');
   const vfile = new VFile({ path: filePath, contents: fileContent });
 
-  try {
-    const processor = remark().use(remarkMdx);
+  // Validate MDX first as this is more complex
+  const mdxValidation = await isMdxValid(fileContent, vfile);
 
-    await processor.process(vfile);
-    await compile(fileContent);
-
-    return { valid: true };
-  } catch (error) {
-    // Use vfile to create a human readable error report
-    const vfileError = error as VFileMessage;
-    vfile.message(vfileError.message, vfileError.place);
-
-    return { valid: false, error: reporter([vfile]) };
+  // If MDX compilation fails, test if it compiles as MD because sometimes
+  // valid MD can trigger MDX issues, for example "## Public or private
+  // {#status}" will cause an exception with MDX
+  if (!mdxValidation.valid) {
+    return await isMdValid(fileContent, vfile);
   }
+
+  return mdxValidation;
 };
 
 export default validateFile;
