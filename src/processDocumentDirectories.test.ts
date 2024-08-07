@@ -49,8 +49,17 @@ describe('processDocumentDirectories', () => {
       './repo/backend/dependencies-02.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       // Intentionally invalid markdown file
-      './repo/frontend/testing-03.md':
-        "- <https://circleci.com/blog/unit-testing-vs-integration-testing/> - <https://circleci.com/blog/snapshot-testing-with-jest/> - <https://www.geeksforgeeks.org/difference-between-unit-testing-and-integration-testing/> - <https://testing-library.com/docs/guiding-principles/> - Don't test [implementation detail](https://kentcdodds.com/blog/testing-implementation-details) - what to test <https://kentcdodds.com/blog/write-tests> - <https://www.benmvp.com/blog/react-testing-library-best-practices/> - <https://github.com/patternfly/patternfly-react/wiki/React-Testing-Library-Basics,-Best-Practices,-and-Guidelines> - [Clean and flexible way to write fixtures](https://michalzalecki.com/fixtures-the-way-to-manage-sample-and-test-data/)",
+      './repo/frontend/testing-03.md': `## References
+
+      - <https://circleci.com/blog/unit-testing-vs-integration-testing/>
+      - <https://circleci.com/blog/snapshot-testing-with-jest/>
+      - <https://www.geeksforgeeks.org/difference-between-unit-testing-and-integration-testing/>
+      - <https://testing-library.com/docs/guiding-principles/>
+      - Don't test [implementation detail](https://kentcdodds.com/blog/testing-implementation-details)
+      - what to test <https://kentcdodds.com/blog/write-tests>
+      - <https://www.benmvp.com/blog/react-testing-library-best-practices/>
+      - <https://github.com/patternfly/patternfly-react/wiki/React-Testing-Library-Basics,-Best-Practices,-and-Guidelines>
+      - [Clean and flexible way to write fixtures](https://michalzalecki.com/fixtures-the-way-to-manage-sample-and-test-data/)`,
       './repo/frontend/accessibility-04.md':
         'Mattis euismod massa tristique dui aliquam etiam aenean. Et lacus diam montes ridiculus nec risus efficitur.',
     };

@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import { VFile } from 'vfile';
-import isMdValid from './isMdValid';
 import isMdxValid from './isMdxValid';
 
 interface FileValidationReport {
@@ -23,13 +22,6 @@ const validateFile = async (
 
   // Validate MDX first as this is more complex
   const mdxValidation = await isMdxValid(fileContent, vfile);
-
-  // If MDX compilation fails, test if it compiles as MD because sometimes
-  // valid MD can trigger MDX issues, for example "## Public or private
-  // {#status}" will cause an exception with MDX
-  if (!mdxValidation.valid) {
-    return await isMdValid(fileContent, vfile);
-  }
 
   return mdxValidation;
 };

@@ -13,6 +13,18 @@ const isMdxValid = async (fileContent: string, vfile: VFile) => {
 
     return { valid: true };
   } catch (error) {
+    // Markdown line with curly brackets can confuse the MDX compiler, for
+    // example: "## Public or private {#status}"
+    if (error instanceof VFileMessage) {
+      if (
+        error.message === 'Could not parse expression with acorn' &&
+        error.ancestors === undefined &&
+        error.source === 'micromark-extension-mdx-expression'
+      ) {
+        return { valid: true };
+      }
+    }
+
     const vfileError = error as VFileMessage;
     vfile.message(vfileError.message, vfileError.place);
 
