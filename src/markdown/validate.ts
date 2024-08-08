@@ -1,10 +1,6 @@
 import * as fs from 'fs';
-import { compile } from '@mdx-js/mdx';
-import { remark } from 'remark';
-import remarkMdx from 'remark-mdx';
 import { VFile } from 'vfile';
-import { reporter } from 'vfile-reporter';
-import { VFileMessage } from 'vfile-message';
+import isMdxValid from './isMdxValid';
 
 interface FileValidationReport {
   valid: boolean;
@@ -24,20 +20,10 @@ const validateFile = async (
   const fileContent = await fs.promises.readFile(filePath, 'utf-8');
   const vfile = new VFile({ path: filePath, contents: fileContent });
 
-  try {
-    const processor = remark().use(remarkMdx);
+  // Validate MDX first as this is more complex
+  const mdxValidation = await isMdxValid(fileContent, vfile);
 
-    await processor.process(vfile);
-    await compile(fileContent);
-
-    return { valid: true };
-  } catch (error) {
-    // Use vfile to create a human readable error report
-    const vfileError = error as VFileMessage;
-    vfile.message(vfileError.message, vfileError.place);
-
-    return { valid: false, error: reporter([vfile]) };
-  }
+  return mdxValidation;
 };
 
 export default validateFile;
