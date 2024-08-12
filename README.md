@@ -28,6 +28,14 @@ The starter contains the following scripts:
 
 Simply create and submit a pull request. You can also contact us via Teams (DV - Engineering Enablement) or Slack (#engineering-enablement).
 
+### Updating
+
+To update the package:
+
+1. Run `npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git]`
+2. Push the new version and new tag.
+3. Publish a [new GitHub release](https://github.com/Amsterdam/ee-docs-importer/releases/new).
+
 ## Acknowledgments
 
 [Original template repo](https://github.com/kbysiec/vite-vanilla-ts-lib-starter)
