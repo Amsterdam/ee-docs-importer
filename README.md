@@ -33,7 +33,8 @@ Simply create and submit a pull request. You can also contact us via Teams (DV -
 To update the package:
 
 1. Run `npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git]`
-2. Push the new version and new tag.
+  *(Usually `minor` or `patch` is sufficient; `npm version minor` - bumps `0.1.0` to `0.2.0`; `npm patch` bumps `0.1.0` to `0.1.1`)*
+2. Push the new version (`git push origin <branch-name>`) and new tag (`git push origin tag <tag_name>`).
 3. Publish a [new GitHub release](https://github.com/Amsterdam/ee-docs-importer/releases/new).
 
 ## Acknowledgments
