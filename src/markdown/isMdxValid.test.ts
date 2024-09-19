@@ -12,10 +12,10 @@ describe('isMdxValid', () => {
       {
         'file.md': fixture,
       },
-      path.join('/', 'tmp', 'docs')
+      path.join(path.sep, 'tmp', 'docs')
     );
     const vfile = new VFile({
-      path: path.join('/', 'tmp', 'docs', 'file.md'),
+      path: path.join(path.sep, 'tmp', 'docs', 'file.md'),
       contents: fixture,
     });
     const result = await isMdxValid(fixture, vfile);
@@ -33,14 +33,14 @@ describe('isMdxValid', () => {
       {
         'markdown.md': markdown,
       },
-      path.join('/', 'tmp', 'docs')
+      path.join(path.sep, 'tmp', 'docs')
     );
 
     const error = new Error(
       'Unexpected character `/` (U+002F) before local name, expected a character that can start a name, such as a letter, `$`, or `_` (note: to create a link in MDX, use `[text](url)`)'
     ) as VFileMessage;
     const vfile = new VFile({
-      path: path.join('/', 'tmp', 'docs', 'markdown.md'),
+      path: path.join(path.sep, 'tmp', 'docs', 'markdown.md'),
       contents: markdown,
     });
 

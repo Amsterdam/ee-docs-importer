@@ -10,7 +10,7 @@ describe('processFiles', () => {
     vi.mocked(validateFile).mockReturnValue(Promise.resolve({ valid: true }));
 
     const dir = 'backend'; // or cloud, frontend, general
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     vol.fromJSON(
       {
@@ -18,7 +18,7 @@ describe('processFiles', () => {
         [path.join('repo', 'backend', 'other.md')]:
           'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       },
-      path.join('/', 'tmp')
+      path.join(path.sep, 'tmp')
     );
 
     const result = await processFiles(dir, clonedRepoDir);
@@ -45,7 +45,7 @@ describe('processFiles', () => {
     );
 
     const dir = 'backend'; // or cloud, frontend, general
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     vol.fromJSON(
       {

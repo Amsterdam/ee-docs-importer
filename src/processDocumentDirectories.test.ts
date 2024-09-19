@@ -19,11 +19,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      path.join('/', 'tmp')
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = path.join('/', 'tmp', 'docs');
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(localDir, clonedRepoDir);
 
@@ -34,7 +34,7 @@ describe('processDocumentDirectories', () => {
 
     // Test each file was copied
     for (const filepath of filepaths) {
-      const splitFilename = filepath.split('/');
+      const splitFilename = filepath.split(path.sep);
       const newFilepath = path.join(
         localDir,
         splitFilename[splitFilename.length - 2],
@@ -74,11 +74,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      path.join('/', 'tmp')
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = path.join('/', 'tmp', 'docs');
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(localDir, clonedRepoDir);
 
@@ -90,7 +90,7 @@ describe('processDocumentDirectories', () => {
     for (const filepath of filepaths) {
       // Skip intentionally invalid markdown file
       if (filepath !== path.join('repo', 'frontend', 'testing-03.md')) {
-        const splitFilename = filepath.split('/');
+        const splitFilename = filepath.split(path.sep);
         const newFilepath = path.join(
           localDir,
           splitFilename[splitFilename.length - 2],

@@ -9,9 +9,11 @@ describe('validate', () => {
       {
         'file.md': fixture,
       },
-      path.join('/', 'tmp', 'docs')
+      path.join(path.sep, 'tmp', 'docs')
     );
-    const result = await validateFile(path.join('/', 'tmp', 'docs', 'file.md'));
+    const result = await validateFile(
+      path.join(path.sep, 'tmp', 'docs', 'file.md')
+    );
     expect(result).toEqual({
       valid: true,
       error: undefined,
@@ -44,11 +46,11 @@ describe('validate', () => {
       {
         'markdown.md': markdown,
       },
-      path.join('/', 'tmp', 'docs')
+      path.join(path.sep, 'tmp', 'docs')
     );
 
     const result = await validateFile(
-      path.join('/', 'tmp', 'docs', 'markdown.md')
+      path.join(path.sep, 'tmp', 'docs', 'markdown.md')
     );
     expect(result.valid).toEqual(true);
   });
