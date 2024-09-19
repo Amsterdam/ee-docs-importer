@@ -1,15 +1,16 @@
+import path from 'path';
 import { fs, vol } from 'memfs';
 import processDocumentDirectories from './processDocumentDirectories';
-import path from 'path';
 
 describe('processDocumentDirectories', () => {
   it('saves only valid files', async () => {
     const files = {
-      './repo/backend/intro.md': 'foobar 123',
-      './repo/backend/dependencies.md':
+      // 'repo/backend/intro.md': 'foobar 123',
+      [path.join('repo', 'backend', 'intro.md')]: 'foobar 123',
+      [path.join('repo', 'backend', 'dependencies.md')]:
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
-      './repo/frontend/intro.md': 'foobar 789',
-      './repo/frontend/testing.md':
+      [path.join('repo', 'frontend', 'intro.md')]: 'foobar 789',
+      [path.join('repo', 'frontend', 'testing.md')]:
         'Mattis euismod massa tristique dui aliquam etiam aenean. Et lacus diam montes ridiculus nec risus efficitur.',
     };
 
@@ -18,11 +19,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      '/tmp'
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = '/tmp/docs';
-    const clonedRepoDir = '/tmp/repo'; // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(localDir, clonedRepoDir);
 
@@ -33,7 +34,7 @@ describe('processDocumentDirectories', () => {
 
     // Test each file was copied
     for (const filepath of filepaths) {
-      const splitFilename = filepath.split('/');
+      const splitFilename = filepath.split(path.sep);
       const newFilepath = path.join(
         localDir,
         splitFilename[splitFilename.length - 2],
@@ -45,11 +46,15 @@ describe('processDocumentDirectories', () => {
 
   it('returns any invalid files', async () => {
     const files = {
-      './repo/backend/intro-01.md': 'foobar 123',
-      './repo/backend/dependencies-02.md':
+      // './repo/backend/intro-01.md': 'foobar 123',
+      [path.join('repo', 'backend', 'intro-01.md')]: 'foobar 123',
+      [path.join('repo', 'backend', 'dependencies-02.md')]:
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
+      // './repo/backend/dependencies-02.md':
+      //   'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       // Intentionally invalid markdown file
-      './repo/frontend/testing-03.md': `## References
+      // './repo/frontend/testing-03.md': `## References
+      [path.join('repo', 'frontend', 'testing-03.md')]: `## References
 
       - <https://circleci.com/blog/unit-testing-vs-integration-testing/>
       - <https://circleci.com/blog/snapshot-testing-with-jest/>
@@ -69,24 +74,23 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      '/tmp'
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = '/tmp/docs';
-    const clonedRepoDir = '/tmp/repo'; // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(localDir, clonedRepoDir);
 
     // No errors should be returned
     expect(result).toHaveProperty('testing-03.md');
-
     const filepaths = Object.keys(files);
 
     // Test each file was copied
     for (const filepath of filepaths) {
       // Skip intentionally invalid markdown file
-      if (filepath !== './repo/frontend/testing-03.md') {
-        const splitFilename = filepath.split('/');
+      if (filepath !== path.join('repo', 'frontend', 'testing-03.md')) {
+        const splitFilename = filepath.split(path.sep);
         const newFilepath = path.join(
           localDir,
           splitFilename[splitFilename.length - 2],

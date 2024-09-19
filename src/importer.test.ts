@@ -1,3 +1,4 @@
+import path from 'path';
 import { app } from './importer';
 
 const { mockedCloneAndCheckout } = vi.hoisted(() => {
@@ -21,13 +22,13 @@ vi.mock('./logger/output');
 
 describe('importer', () => {
   it('calls cloneAndCheckout with the correct URL and directories', async () => {
-    await app('docs');
+    await app(path.join('docs'));
     // These values would be wiser as environment variables but we only
     // reference them in 2 places: here and in `importer.ts`, so this saves
     // modifying the esbuild command and creating an .env file
     expect(mockedCloneAndCheckout).toHaveBeenCalledWith(
       'git@github.com:Amsterdam/development-standards.git',
-      'docs/latest'
+      path.join('docs', 'latest')
     );
   });
 });
