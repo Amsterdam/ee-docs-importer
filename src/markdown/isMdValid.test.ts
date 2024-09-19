@@ -13,11 +13,11 @@ describe('isMdValid', () => {
       '/tmp/docs'
     );
     const vfile = new VFile({
-      path: path.join('/', 'tmp', 'docs', 'file.md'),
+      path: path.join(path.sep, 'tmp', 'docs', 'file.md'),
       contents: fixture,
     });
     const result = await isMdValid(
-      path.join('/', 'tmp', 'docs', 'file.md'),
+      path.join(path.sep, 'tmp', 'docs', 'file.md'),
       vfile
     );
     expect(result).toEqual({

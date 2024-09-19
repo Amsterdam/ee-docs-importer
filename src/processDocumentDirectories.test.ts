@@ -19,11 +19,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      path.join('/', 'tmp')
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = path.join('/', 'tmp', 'docs');
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
@@ -80,11 +80,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      path.join('/', 'tmp')
+      path.join(path.sep, 'tmp')
     );
 
-    const localDir = path.join('/', 'tmp', 'docs');
-    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
+    const localDir = path.join(path.sep, 'tmp', 'docs');
+    const clonedRepoDir = path.join(path.sep, 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
