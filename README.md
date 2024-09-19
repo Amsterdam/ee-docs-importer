@@ -28,6 +28,16 @@ The starter contains the following scripts:
 
 Simply create and submit a pull request. You can also contact us via Teams (DV - Engineering Enablement) or Slack (#engineering-enablement).
 
+### Updating
+
+To update the package:
+
+1. Run `npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git]`
+  *(Usually `minor` or `patch` is sufficient; `npm version minor` - bumps `0.1.0` to `0.2.0`; `npm patch` bumps `0.1.0` to `0.1.1`)*
+2. Push the new version (`git push origin <branch-name>`) and new tag (`git push origin tag <tag_name>`).
+   Git tags can be listed with `git tag`. Usually this is the version NPM has bumped to preceded with `v`; for example the tag for `0.1.0` is `v0.1.0`
+4. Publish a [new GitHub release](https://github.com/Amsterdam/ee-docs-importer/releases/new).
+
 ## Acknowledgments
 
 [Original template repo](https://github.com/kbysiec/vite-vanilla-ts-lib-starter)
