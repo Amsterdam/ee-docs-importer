@@ -1,6 +1,7 @@
 import { vol } from 'memfs';
 import processFiles from './processFiles';
 import validateFile from './markdown/validate';
+import path from 'path';
 
 vi.mock('./markdown/validate');
 
@@ -9,15 +10,15 @@ describe('processFiles', () => {
     vi.mocked(validateFile).mockReturnValue(Promise.resolve({ valid: true }));
 
     const dir = 'backend'; // or cloud, frontend, general
-    const clonedRepoDir = '/tmp/repo'; // docs/lates
+    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
 
     vol.fromJSON(
       {
-        './repo/backend/intro.md': 'foobar 123',
-        './repo/backend/other.md':
+        [path.join('repo', 'backend', 'intro.md')]: 'foobar 123',
+        [path.join('repo', 'backend', 'other.md')]:
           'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       },
-      '/tmp'
+      path.join('/', 'tmp')
     );
 
     const result = await processFiles(dir, clonedRepoDir);
@@ -44,12 +45,12 @@ describe('processFiles', () => {
     );
 
     const dir = 'backend'; // or cloud, frontend, general
-    const clonedRepoDir = '/tmp/repo'; // docs/lates
+    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
 
     vol.fromJSON(
       {
-        './repo/backend/intro.md': 'foobar 123',
-        './repo/backend/other.md':
+        [path.join('repo', 'backend', 'intro.md')]: 'foobar 123',
+        [path.join('repo', 'backend', 'other.md')]:
           'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       },
       '/tmp'

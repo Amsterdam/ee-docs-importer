@@ -1,8 +1,9 @@
 import { vol } from 'memfs';
-import isMdxValid from './isMdxValid';
+import path from 'path';
 import { VFile } from 'vfile';
 import { reporter } from 'vfile-reporter';
 import { VFileMessage } from 'vfile-message';
+import isMdxValid from './isMdxValid';
 import fixture from '../../test/fixtures/example-00.md?raw';
 
 describe('isMdxValid', () => {
@@ -11,9 +12,12 @@ describe('isMdxValid', () => {
       {
         'file.md': fixture,
       },
-      '/tmp/docs'
+      path.join('/', 'tmp', 'docs')
     );
-    const vfile = new VFile({ path: '/tmp/docs/file.md', contents: fixture });
+    const vfile = new VFile({
+      path: path.join('/', 'tmp', 'docs', 'file.md'),
+      contents: fixture,
+    });
     const result = await isMdxValid(fixture, vfile);
     expect(result).toEqual({
       valid: true,
@@ -29,14 +33,14 @@ describe('isMdxValid', () => {
       {
         'markdown.md': markdown,
       },
-      '/tmp/docs'
+      path.join('/', 'tmp', 'docs')
     );
 
     const error = new Error(
       'Unexpected character `/` (U+002F) before local name, expected a character that can start a name, such as a letter, `$`, or `_` (note: to create a link in MDX, use `[text](url)`)'
     ) as VFileMessage;
     const vfile = new VFile({
-      path: '/tmp/docs/markdown.md',
+      path: path.join('/', 'tmp', 'docs', 'markdown.md'),
       contents: markdown,
     });
 
