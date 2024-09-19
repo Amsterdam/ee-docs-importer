@@ -1,6 +1,6 @@
+import path from 'path';
 import { fs, vol } from 'memfs';
 import processDocumentDirectories from './processDocumentDirectories';
-import path from 'path';
 
 describe('processDocumentDirectories', () => {
   it('saves only valid files', async () => {
@@ -9,8 +9,8 @@ describe('processDocumentDirectories', () => {
       './repo/intro.md': 'welcome to the application',
       './repo/backend/dependencies.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
-      './repo/frontend/intro.md': 'foobar 789',
-      './repo/frontend/testing.md':
+      [path.join('repo', 'frontend', 'intro.md')]: 'foobar 789',
+      [path.join('repo', 'frontend', 'testing.md')]:
         'Mattis euismod massa tristique dui aliquam etiam aenean. Et lacus diam montes ridiculus nec risus efficitur.',
     };
 
@@ -19,11 +19,11 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      '/tmp'
+      path.join('/', 'tmp')
     );
 
-    const localDir = '/tmp/docs';
-    const clonedRepoDir = '/tmp/repo'; // docs/latest
+    const localDir = path.join('/', 'tmp', 'docs');
+    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
@@ -56,8 +56,11 @@ describe('processDocumentDirectories', () => {
       './repo/backend/intro-01.md': 'foobar 123',
       './repo/backend/dependencies-02.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
+      // './repo/backend/dependencies-02.md':
+      //   'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       // Intentionally invalid markdown file
-      './repo/frontend/testing-03.md': `## References
+      // './repo/frontend/testing-03.md': `## References
+      [path.join('repo', 'frontend', 'testing-03.md')]: `## References
 
       - <https://circleci.com/blog/unit-testing-vs-integration-testing/>
       - <https://circleci.com/blog/snapshot-testing-with-jest/>
@@ -77,23 +80,22 @@ describe('processDocumentDirectories', () => {
         ...files,
         docs: null, // create empty dir for the valid markdown files
       },
-      '/tmp'
+      path.join('/', 'tmp')
     );
 
-    const localDir = '/tmp/docs';
-    const clonedRepoDir = '/tmp/repo'; // docs/latest
+    const localDir = path.join('/', 'tmp', 'docs');
+    const clonedRepoDir = path.join('/', 'tmp', 'repo'); // docs/latest
 
     const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
     // No errors should be returned
     expect(result).toHaveProperty('testing-03.md');
-
     const filepaths = Object.keys(files);
 
     // Test each file was copied
     for (const filepath of filepaths) {
       // Skip intentionally invalid markdown file
-      if (filepath !== './repo/frontend/testing-03.md') {
+      if (filepath !== path.join('repo', 'frontend', 'testing-03.md')) {
         const splitFilename = filepath.split('/');
         // We copy Markdown files from the root directory (except README.md) and files
         // from the `backend`, `cloud`, `frontend`, `general` directories. This creates

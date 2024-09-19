@@ -1,3 +1,4 @@
+import path from 'path';
 import { vol } from 'memfs';
 import { VFile } from 'vfile';
 import isMdValid from './isMdValid';
@@ -11,8 +12,14 @@ describe('isMdValid', () => {
       },
       '/tmp/docs'
     );
-    const vfile = new VFile({ path: '/tmp/docs/file.md', contents: fixture });
-    const result = await isMdValid('/tmp/docs/file.md', vfile);
+    const vfile = new VFile({
+      path: path.join('/', 'tmp', 'docs', 'file.md'),
+      contents: fixture,
+    });
+    const result = await isMdValid(
+      path.join('/', 'tmp', 'docs', 'file.md'),
+      vfile
+    );
     expect(result).toEqual({
       valid: true,
       error: undefined,

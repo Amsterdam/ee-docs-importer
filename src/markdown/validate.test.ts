@@ -1,3 +1,4 @@
+import path from 'path';
 import { vol } from 'memfs';
 import validateFile from './validate';
 import fixture from '../../test/fixtures/example-00.md?raw';
@@ -8,9 +9,9 @@ describe('validate', () => {
       {
         'file.md': fixture,
       },
-      '/tmp/docs'
+      path.join('/', 'tmp', 'docs')
     );
-    const result = await validateFile('/tmp/docs/file.md');
+    const result = await validateFile(path.join('/', 'tmp', 'docs', 'file.md'));
     expect(result).toEqual({
       valid: true,
       error: undefined,
@@ -43,10 +44,12 @@ describe('validate', () => {
       {
         'markdown.md': markdown,
       },
-      '/tmp/docs'
+      path.join('/', 'tmp', 'docs')
     );
 
-    const result = await validateFile('/tmp/docs/markdown.md');
+    const result = await validateFile(
+      path.join('/', 'tmp', 'docs', 'markdown.md')
+    );
     expect(result.valid).toEqual(true);
   });
 });
