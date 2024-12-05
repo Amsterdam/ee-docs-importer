@@ -25,7 +25,7 @@ describe('processDocumentDirectories', () => {
     const localDir = '/tmp/docs';
     const clonedRepoDir = '/tmp/repo'; // docs/latest
 
-    const result = await processDocumentDirectories(localDir, clonedRepoDir);
+    const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
     // No errors should be returned
     expect(result).toEqual({});
@@ -83,7 +83,7 @@ describe('processDocumentDirectories', () => {
     const localDir = '/tmp/docs';
     const clonedRepoDir = '/tmp/repo'; // docs/latest
 
-    const result = await processDocumentDirectories(localDir, clonedRepoDir);
+    const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
     // No errors should be returned
     expect(result).toHaveProperty('testing-03.md');

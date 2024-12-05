@@ -11,7 +11,7 @@ const cloneDir = path.join(localDir, 'latest');
 export async function app(savePath: string) {
   // Clone the latest development-standards repo
   await cloneAndCheckout(remoteUrl, cloneDir).then(async () => {
-    const errors = await processDocumentDirectories(savePath, cloneDir);
+    const errors = await processDocumentDirectories(cloneDir, savePath);
     outputResults(errors);
   });
 }

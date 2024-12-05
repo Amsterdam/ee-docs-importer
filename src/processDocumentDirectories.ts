@@ -42,7 +42,11 @@ const saveFiles = async (
   return invalidFiles;
 };
 
+/**
+ * Process the imported repository root directories and save valid markdown files
+ */
 const processRoot = async (clonedRepoDir: string, targetDir: string) => {
+  // Read and validate the markdown files
   const processedFiles = await processFiles(clonedRepoDir, [
     ...repoDirs,
     '.git',
@@ -51,6 +55,8 @@ const processRoot = async (clonedRepoDir: string, targetDir: string) => {
     'README.md',
     'internal',
   ]);
+
+  // Copy the files to the final directory
   const invalidFiles: { [key: string]: string | undefined } = await saveFiles(
     processedFiles,
     '.',
@@ -61,46 +67,61 @@ const processRoot = async (clonedRepoDir: string, targetDir: string) => {
   return invalidFiles;
 };
 
-/**
- * Process the imported repository directories and save valid markdown files
- */
-const processDocumentDirectories = async (
-  localDir: string,
-  clonedRepoDir: string
+const processSubDirectories = async (
+  clonedRepoDir: string,
+  targetDir: string
 ) => {
-  // Any files that fail validation will be logged here
-  let dirInvalidFiles: { [key: string]: string | undefined } = {};
+  let invalidFiles: { [key: string]: string | undefined } = {};
 
   // This is currently empty but present in case a directory name requires changing on import
   // For example {general: 'common'} will rename the `general` dir to `common`
   const dirsToRename: { [key: string]: string } = {};
 
   for (const dir of repoDirs) {
+    // Read and validate the markdown files
     const repoDirPath = path.join(clonedRepoDir, dir);
     const processedFiles = await processFiles(repoDirPath);
-    const targetDir = dirsToRename[dir]
-      ? path.join(localDir, dirsToRename[dir])
-      : path.join(localDir, dir);
 
-    const invalidFiles = await saveFiles(
+    // Build the final target path
+    const finalTargetDir = dirsToRename[dir]
+      ? path.join(targetDir, dirsToRename[dir])
+      : path.join(targetDir, dir);
+
+    // Copy the files to the final directory
+    const dirInvalidFiles = await saveFiles(
       processedFiles,
       dir,
-      targetDir,
+      finalTargetDir,
       clonedRepoDir
     );
 
-    dirInvalidFiles = {
-      ...dirInvalidFiles,
+    invalidFiles = {
       ...invalidFiles,
+      ...dirInvalidFiles,
     };
   }
 
-  const rootInvalidFiles = await processRoot(clonedRepoDir, localDir);
+  return invalidFiles;
+};
+
+/**
+ * Process the imported repository and save valid markdown files
+ */
+const processDocumentDirectories = async (
+  clonedRepoDir: string,
+  targetDir: string
+) => {
+  // Any files that fail validation will be logged
+  const rootInvalidFiles = await processRoot(clonedRepoDir, targetDir);
+  const subDirectoryInvalidFiles = await processSubDirectories(
+    clonedRepoDir,
+    targetDir
+  );
 
   // Erase repo directory
   fs.rmSync(clonedRepoDir, { recursive: true });
 
-  return { ...rootInvalidFiles, ...dirInvalidFiles };
+  return { ...rootInvalidFiles, ...subDirectoryInvalidFiles };
 };
 
 export default processDocumentDirectories;
