@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import validateFile from './markdown/validate';
 
-interface ProcessedFile {
+export interface ProcessedFile {
   filename: string;
   valid: boolean;
   error: string | undefined;
@@ -15,25 +15,26 @@ interface ProcessedFile {
  * @returns string[] of valid markdown filenames
  */
 const processFiles = async (
-  dir: string,
-  clonedRepoDir: string
+  srcDir: string,
+  excludeFiles?: string[]
 ): Promise<ProcessedFile[]> => {
   const processed: ProcessedFile[] = [];
-  const srcDir = path.join(clonedRepoDir, dir);
 
   if (fs.existsSync(srcDir)) {
     // Get files from directory and loop through them
     const filenames = await fs.promises.readdir(srcDir);
 
     for (const filename of filenames) {
-      const srcFilePath = path.join(srcDir, filename);
-      const { valid, error } = await validateFile(srcFilePath);
+      if (!excludeFiles?.includes(filename)) {
+        const srcFilePath = path.join(srcDir, filename);
+        const { valid, error } = await validateFile(srcFilePath);
 
-      processed.push({
-        filename,
-        valid: valid ?? false,
-        error: error ?? undefined,
-      });
+        processed.push({
+          filename,
+          valid: valid ?? false,
+          error: error ?? undefined,
+        });
+      }
     }
   }
 
