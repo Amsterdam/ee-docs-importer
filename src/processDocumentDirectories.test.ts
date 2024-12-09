@@ -6,6 +6,7 @@ describe('processDocumentDirectories', () => {
   it('saves only valid files', async () => {
     const files = {
       './repo/backend/intro.md': 'foobar 123',
+      './repo/intro.md': 'welcome to the application',
       './repo/backend/dependencies.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
       './repo/frontend/intro.md': 'foobar 789',
@@ -24,27 +25,34 @@ describe('processDocumentDirectories', () => {
     const localDir = '/tmp/docs';
     const clonedRepoDir = '/tmp/repo'; // docs/latest
 
-    const result = await processDocumentDirectories(localDir, clonedRepoDir);
+    const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
     // No errors should be returned
     expect(result).toEqual({});
 
     const filepaths = Object.keys(files);
 
-    // Test each file was copied
+    // Test that each file was copied
     for (const filepath of filepaths) {
       const splitFilename = filepath.split('/');
-      const newFilepath = path.join(
-        localDir,
-        splitFilename[splitFilename.length - 2],
-        splitFilename[splitFilename.length - 1]
-      );
+      // We copy Markdown files from the root directory (except README.md) and files
+      // from the `backend`, `cloud`, `frontend`, `general` directories. This creates
+      // the file path
+      const newFilepath =
+        splitFilename[splitFilename.length - 2] === 'repo'
+          ? path.join(localDir, splitFilename[splitFilename.length - 1])
+          : path.join(
+              localDir,
+              splitFilename[splitFilename.length - 2],
+              splitFilename[splitFilename.length - 1]
+            );
       expect(fs.existsSync(newFilepath)).toEqual(true);
     }
   });
 
   it('returns any invalid files', async () => {
     const files = {
+      ',/repo/intro.md': 'welcome to the application',
       './repo/backend/intro-01.md': 'foobar 123',
       './repo/backend/dependencies-02.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
@@ -75,7 +83,7 @@ describe('processDocumentDirectories', () => {
     const localDir = '/tmp/docs';
     const clonedRepoDir = '/tmp/repo'; // docs/latest
 
-    const result = await processDocumentDirectories(localDir, clonedRepoDir);
+    const result = await processDocumentDirectories(clonedRepoDir, localDir);
 
     // No errors should be returned
     expect(result).toHaveProperty('testing-03.md');
@@ -87,11 +95,17 @@ describe('processDocumentDirectories', () => {
       // Skip intentionally invalid markdown file
       if (filepath !== './repo/frontend/testing-03.md') {
         const splitFilename = filepath.split('/');
-        const newFilepath = path.join(
-          localDir,
-          splitFilename[splitFilename.length - 2],
-          splitFilename[splitFilename.length - 1]
-        );
+        // We copy Markdown files from the root directory (except README.md) and files
+        // from the `backend`, `cloud`, `frontend`, `general` directories. This creates
+        // the file path
+        const newFilepath =
+          splitFilename[splitFilename.length - 2] === 'repo'
+            ? path.join(localDir, splitFilename[splitFilename.length - 1])
+            : path.join(
+                localDir,
+                splitFilename[splitFilename.length - 2],
+                splitFilename[splitFilename.length - 1]
+              );
         expect(fs.existsSync(newFilepath)).toEqual(true);
       }
     }

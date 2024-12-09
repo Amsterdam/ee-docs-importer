@@ -1,4 +1,5 @@
 import { vol } from 'memfs';
+import path from 'path';
 import processFiles from './processFiles';
 import validateFile from './markdown/validate';
 
@@ -20,7 +21,7 @@ describe('processFiles', () => {
       '/tmp'
     );
 
-    const result = await processFiles(dir, clonedRepoDir);
+    const result = await processFiles(path.join(clonedRepoDir, dir));
     expect(result).toEqual([
       {
         filename: 'intro.md',
@@ -55,7 +56,7 @@ describe('processFiles', () => {
       '/tmp'
     );
 
-    const result = await processFiles(dir, clonedRepoDir);
+    const result = await processFiles(path.join(clonedRepoDir, dir));
     expect(result).toEqual([
       {
         filename: 'intro.md',
