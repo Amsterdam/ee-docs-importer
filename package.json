@@ -1,7 +1,7 @@
 {
   "name": "ee-docs-importer",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/importer.js",
   "scripts": {
     "import": "node ./dist/importer.js",
