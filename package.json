@@ -16,13 +16,16 @@
     "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky"
   },
   "devDependencies": {
+    "@release-it/conventional-changelog": "^9.0.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "@vitest/coverage-v8": "^2.1.1",
+    "commitizen": "^4.3.1",
     "copyfiles": "^2.4.1",
+    "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.23.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -31,6 +34,7 @@
     "lint-staged": "^15.2.7",
     "memfs": "^4.11.0",
     "prettier": "^3.2.5",
+    "release-it": "^17.10.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.5.4",
     "vite": "^5.4.6",
@@ -44,5 +48,10 @@
     "vfile": "^6.0.2",
     "vfile-message": "^4.0.2",
     "vfile-reporter": "^8.1.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

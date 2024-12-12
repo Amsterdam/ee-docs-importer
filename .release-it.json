@@ -1,0 +1,23 @@
+{
+    "hooks": {
+      "before:init": ["npm test"]
+    },
+    "git": {
+      "requireCleanWorkingDir": true,
+      "commitMessage": "chore: release ${version}",
+      "tagName": "${version}",
+      "push": true
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  }
+  
