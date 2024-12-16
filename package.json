@@ -13,7 +13,8 @@
     "format:scripts": "prettier . --write",
     "format": "npm run format:scripts",
     "prepare": "husky",
-    "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky"
+    "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky",
+    "release": "release-it"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^9.0.3",

@@ -1,10 +1,8 @@
 {
-    "hooks": {
-      "before:init": ["npm test"]
-    },
     "git": {
       "requireCleanWorkingDir": true,
-      "commitMessage": "chore: release ${version}",
+      "commitMessage": "Release v${version}",
+      "tagAnnotation": "Release v${version}",
       "tagName": "${version}",
       "push": true
     },
@@ -12,11 +10,12 @@
       "release": true
     },
     "npm": {
-      "publish": true
+      "publish": false
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": "angular"
+        "preset": "conventionalcommits",
+        "infile": "CHANGELOG.md"
       }
     }
   }
