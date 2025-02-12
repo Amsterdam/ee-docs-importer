@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import validateFile from './markdown/validate';
+import isImage from 'is-image';
+import validateMarkdownFile from './markdown/validate';
 
 export interface ProcessedFile {
   filename: string;
@@ -25,15 +26,31 @@ const processFiles = async (
     const filenames = await fs.promises.readdir(srcDir);
 
     for (const filename of filenames) {
-      if (!excludeFiles?.includes(filename)) {
-        const srcFilePath = path.join(srcDir, filename);
-        const { valid, error } = await validateFile(srcFilePath);
+      const srcFilePath = path.join(srcDir, filename);
 
-        processed.push({
-          filename,
-          valid: valid ?? false,
-          error: error ?? undefined,
-        });
+      if (!excludeFiles?.includes(filename)) {
+        // Process Markdown file(s)
+        if (path.extname(filename) === '.md') {
+          const { valid, error } = await validateMarkdownFile(srcFilePath);
+
+          processed.push({
+            filename,
+            valid: valid ?? false,
+            error: error ?? undefined,
+          });
+        }
+
+        if (isImage(srcFilePath)) {
+          // TODO image validation would be useful but currently in Node.js it looks
+          // limited to checking extensions and mime-types, which is pretty weak.
+          // Therefore, as these documents come from an internal repository we trust
+          // the image files are valid
+          processed.push({
+            filename,
+            valid: true,
+            error: undefined,
+          });
+        }
       }
     }
   }
