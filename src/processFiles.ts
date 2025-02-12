@@ -28,12 +28,6 @@ const processFiles = async (
     for (const filename of filenames) {
       const srcFilePath = path.join(srcDir, filename);
 
-      // Check if the current item is a file
-      if (!fs.lstatSync(srcFilePath).isFile()) {
-        console.log(`${srcFilePath} is not a file. Skipping.`);
-        continue; // Skip directories or non-file items
-      }
-
       if (!excludeFiles?.includes(filename)) {
         // Process Markdown file(s)
         if (path.extname(filename) === '.md') {
