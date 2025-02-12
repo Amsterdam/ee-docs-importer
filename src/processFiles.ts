@@ -22,13 +22,6 @@ const processFiles = async (
   const processed: ProcessedFile[] = [];
 
   if (fs.existsSync(srcDir)) {
-    // Create an attachments directory if it doesn't exist
-    const attachmentsDir = path.join(srcDir, 'attachments');
-    if (!fs.existsSync(attachmentsDir)) {
-      fs.mkdirSync(attachmentsDir);
-      console.log(`Created attachments directory: ${attachmentsDir}`);
-    }
-
     // Get files from directory and loop through them
     const filenames = await fs.promises.readdir(srcDir);
 
