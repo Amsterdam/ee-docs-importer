@@ -28,7 +28,7 @@ const saveFiles = async (
   targetDir: string,
   clonedRepoDir: string
 ) => {
-  // Any files that fail validation will be logged here
+  // Any files that failed validation will be logged here
   const invalidFiles: { [key: string]: string | undefined } = {};
 
   for (const file of files) {
@@ -43,7 +43,8 @@ const saveFiles = async (
 };
 
 /**
- * Process the imported repository root directories and save valid markdown files
+ * Process the imported repository root directories and save valid markdown and
+ * attached image files
  */
 const processRoot = async (clonedRepoDir: string, targetDir: string) => {
   // Read and validate the markdown files
@@ -73,7 +74,8 @@ const processSubDirectories = async (
 ) => {
   let invalidFiles: { [key: string]: string | undefined } = {};
 
-  // This is currently empty but present in case a directory name requires changing on import
+  // This is currently empty but present in case a directory name requires
+  // changing on import
   // For example {general: 'common'} will rename the `general` dir to `common`
   const dirsToRename: { [key: string]: string } = {};
 
@@ -99,13 +101,15 @@ const processSubDirectories = async (
       ...invalidFiles,
       ...dirInvalidFiles,
     };
+
+    console.log({ processedFiles, invalidFiles });
   }
 
   return invalidFiles;
 };
 
 /**
- * Process the imported repository and save valid markdown files
+ * Process the imported repository and save valid markdown and image files
  */
 const processDocumentDirectories = async (
   clonedRepoDir: string,

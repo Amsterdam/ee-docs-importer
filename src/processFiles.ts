@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import validateFile from './markdown/validate';
+import isImage from 'is-image';
+import validateMarkdownFile from './markdown/validate';
 
 export interface ProcessedFile {
   filename: string;
@@ -41,54 +42,27 @@ const processFiles = async (
       }
 
       if (!excludeFiles?.includes(filename)) {
-        const { valid, error } = await validateFile(srcFilePath);
+        // Process Markdown file(s)
+        if (path.extname(filename) === '.md') {
+          const { valid, error } = await validateMarkdownFile(srcFilePath);
 
-        processed.push({
-          filename,
-          valid: valid ?? false,
-          error: error ?? undefined,
-        });
+          processed.push({
+            filename,
+            valid: valid ?? false,
+            error: error ?? undefined,
+          });
+        }
 
-        // Process images if the file is a valid markdown file
-        if (valid && filename.endsWith('.md')) {
-          const content = fs.readFileSync(srcFilePath, 'utf8');
-          const imageRegex = /!\[.*?\]\((.*?)\)/g;
-          let match;
-          let imageCount = 0;
-
-          let updatedContent = content; // For updating Markdown with new paths
-
-          while ((match = imageRegex.exec(content)) !== null) {
-            const imagePath = match[1]; // Extract the image path
-
-            if (imageCount >= 10) {
-              console.warn(
-                `Too many images in ${filename}. Skipping further attachments.`
-              );
-              break;
-            }
-
-            const absoluteImagePath = path.join(srcDir, imagePath);
-            const imageName = path.basename(imagePath);
-            const newImagePath = path.join(attachmentsDir, imageName);
-
-            if (fs.existsSync(absoluteImagePath)) {
-              fs.copyFileSync(absoluteImagePath, newImagePath);
-              console.log(`Copied image: ${absoluteImagePath} to ${newImagePath}`);
-
-              // Update the Markdown content with the new image path
-              updatedContent = updatedContent.replace(
-                imagePath,
-                `attachments/${imageName}`
-              );
-              imageCount++;
-            } else {
-              console.warn(`Image not found: ${absoluteImagePath}`);
-            }
-          }
-
-          // Write updated Markdown content back to the file
-          fs.writeFileSync(srcFilePath, updatedContent, 'utf8');
+        if (isImage(srcFilePath)) {
+          // TODO image validation would be useful but currently in Node.js it looks
+          // limited to checking extensions and mime-types, which is pretty weak.
+          // Therefore, as these documents come from an internal repository we trust
+          // the image files are valid
+          processed.push({
+            filename,
+            valid: true,
+            error: undefined,
+          });
         }
       }
     }

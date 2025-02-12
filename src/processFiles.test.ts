@@ -2,7 +2,6 @@ import { vol } from 'memfs';
 import path from 'path';
 import processFiles from './processFiles';
 import validateFile from './markdown/validate';
-import path from 'path';
 
 vi.mock('./markdown/validate');
 

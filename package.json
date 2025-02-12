@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.0.1",
+    "is-image": "^4.0.0",
     "remark": "^15.0.1",
     "remark-mdx": "^3.0.1",
     "simple-git": "^3.25.0",
