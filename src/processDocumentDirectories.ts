@@ -101,8 +101,6 @@ const processSubDirectories = async (
       ...invalidFiles,
       ...dirInvalidFiles,
     };
-
-    console.log({ processedFiles, invalidFiles });
   }
 
   return invalidFiles;
