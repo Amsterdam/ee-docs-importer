@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import processFiles, { ProcessedFile } from './processFiles';
 
 // The directories in the `development-standards` repo that we are interested in
-const repoDirs = ['backend', 'cloud', 'frontend', 'general'];
+const repoDirs = ['backend', 'frontend', 'general'];
 
 const saveFile = async (
   currentDir: string,
@@ -42,8 +42,20 @@ const saveFiles = async (
   return invalidFiles;
 };
 
+const deleteFiles = async (newFiles: string[], targetDir: string) => {
+  const currentFiles = await fs.promises.readdir(targetDir);
+  currentFiles.forEach(async currentFile => {
+    if (!fs.lstatSync(path.join(targetDir, currentFile)).isDirectory()) {
+      if (!newFiles.includes(currentFile)) {
+        await fs.promises.unlink(path.join(targetDir, currentFile));
+      }
+    }
+  });
+};
+
 /**
- * Process the imported repository root directories and save valid markdown files
+ * Process the imported repository root directories and files
+ * and save any valid markdown files
  */
 const processRoot = async (clonedRepoDir: string, targetDir: string) => {
   // Read and validate the markdown files
@@ -55,6 +67,10 @@ const processRoot = async (clonedRepoDir: string, targetDir: string) => {
     'README.md',
     'internal',
   ]);
+
+  // Files to copy over from the cloned root directory
+  const newFilenames = processedFiles.map(({ filename }) => filename);
+  await deleteFiles(newFilenames, targetDir);
 
   // Copy the files to the final directory
   const invalidFiles: { [key: string]: string | undefined } = await saveFiles(
@@ -86,6 +102,10 @@ const processSubDirectories = async (
     const finalTargetDir = dirsToRename[dir]
       ? path.join(targetDir, dirsToRename[dir])
       : path.join(targetDir, dir);
+
+    // Files to copy over from the cloned root directory
+    const newFilenames = processedFiles.map(({ filename }) => filename);
+    await deleteFiles(newFilenames, finalTargetDir);
 
     // Copy the files to the final directory
     const dirInvalidFiles = await saveFiles(
