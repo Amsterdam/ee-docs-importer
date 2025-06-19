@@ -3,13 +3,13 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - develop
-      - feature/*
-      - hotfix/*
-      - release/*
+      - '**'
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   setup:
