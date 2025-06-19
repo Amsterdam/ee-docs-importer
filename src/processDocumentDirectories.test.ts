@@ -175,7 +175,7 @@ describe('processDocumentDirectories', () => {
       './docs/backend/old-backend-doc.md': 'This backend file should be deleted.',
       './docs/backend/shared-backend-doc.md': 'This backend file should persist.',
       './docs/frontend/old-frontend-doc.md': 'This frontend file should be deleted.',
-      './docs/root-doc.md': 'This root file should persist.', // Ensure root files are not affected by subdir cleanup
+      './docs/root-doc.md': 'This root file should persist.',
     };
 
     // Files in the cloned repository (source)
