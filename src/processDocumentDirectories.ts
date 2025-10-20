@@ -63,6 +63,7 @@ const processRoot = async (clonedRepoDir: string, targetDir: string) => {
     ...repoDirs,
     '.git',
     '.gitignore',
+    'CODEOWNERS',
     'LICENSE',
     'README.md',
     'internal',
