@@ -43,7 +43,7 @@
     "@mdx-js/mdx": "^3.0.1",
     "remark": "^15.0.1",
     "remark-mdx": "^3.0.1",
-    "simple-git": "^3.32.3",
+    "simple-git": "^3.36.0",
     "vfile": "^6.0.2",
     "vfile-message": "^4.0.2",
     "vfile-reporter": "^8.1.1"
