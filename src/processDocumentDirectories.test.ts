@@ -5,6 +5,7 @@ import processDocumentDirectories from './processDocumentDirectories';
 describe('processDocumentDirectories', () => {
   it('saves only valid files', async () => {
     const files = {
+      './repo/ai/intro.md': 'foobar 456',
       './repo/backend/intro.md': 'foobar 123',
       './repo/intro.md': 'welcome to the application',
       './repo/backend/dependencies.md':
@@ -18,6 +19,7 @@ describe('processDocumentDirectories', () => {
       {
         ...files,
         docs: null,
+        'docs/ai': null,
         'docs/backend': null,
         'docs/frontend': null,
         'docs/general': null,
@@ -56,6 +58,7 @@ describe('processDocumentDirectories', () => {
   it('returns any invalid files', async () => {
     const files = {
       './repo/intro.md': 'welcome to the application',
+      './repo/ai/intro-01.md': 'foobar 456',
       './repo/backend/intro-01.md': 'foobar 123',
       './repo/backend/dependencies-02.md':
         'Lorem ipsum odor amet, consectetuer adipiscing elit. Potenti congue placerat rutrum lacinia varius nostra blandit.',
@@ -82,6 +85,7 @@ describe('processDocumentDirectories', () => {
       {
         ...files,
         docs: null,
+        '/docs/ai': null,
         'docs/backend': null,
         'docs/frontend': null,
         'docs/general': null,
@@ -140,6 +144,7 @@ describe('processDocumentDirectories', () => {
       {
         ...initialTargetFiles,
         ...filesInRepo,
+        'docs/ai': null,
         'docs/backend': null,
         'docs/frontend': null,
         'docs/general': null,
@@ -205,6 +210,7 @@ describe('processDocumentDirectories', () => {
       {
         ...initialTargetFiles,
         ...filesInRepo,
+        'docs/ai': null,
         'docs/backend': null,
         'docs/frontend': null,
         'docs/general': null,
