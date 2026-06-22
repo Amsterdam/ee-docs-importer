@@ -1,4 +1,5 @@
 import { expect, it, describe, vi } from 'vitest';
+import * as fs from 'fs';
 import cloneAndCheckout from './cloneAndCheckout';
 
 const { cloneMock } = vi.hoisted(() => {
@@ -58,5 +59,24 @@ describe('cloneAndCheckout', () => {
     );
 
     expect(checkoutMock).toHaveBeenCalledWith('feature/foobar');
+  });
+
+  it('removes an existing clone target directory before cloning', async () => {
+    const existsSpy = vi.spyOn(fs, 'existsSync').mockReturnValue(true);
+    const rmSpy = vi.spyOn(fs, 'rmSync').mockImplementation(vi.fn());
+
+    await cloneAndCheckout(
+      'git@github.com:Amsterdam/development-standards.git',
+      'docs/local'
+    );
+
+    expect(existsSpy).toHaveBeenCalledWith('docs/local');
+    expect(rmSpy).toHaveBeenCalledWith('docs/local', {
+      recursive: true,
+      force: true,
+    });
+
+    existsSpy.mockRestore();
+    rmSpy.mockRestore();
   });
 });

@@ -27,6 +27,12 @@ const processFiles = async (
     for (const filename of filenames) {
       if (!excludeFiles?.includes(filename)) {
         const srcFilePath = path.join(srcDir, filename);
+        const stat = await fs.promises.lstat(srcFilePath);
+
+        if (!stat.isFile()) {
+          continue;
+        }
+
         const { valid, error } = await validateFile(srcFilePath);
 
         processed.push({
