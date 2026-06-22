@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import processFiles, { ProcessedFile } from './processFiles';
 
 // The directories in the `development-standards` repo that we are interested in
-const repoDirs = ['backend', 'frontend', 'general'];
+const repoDirs = ['ai', 'backend', 'frontend', 'general'];
 
 const saveFile = async (
   currentDir: string,
@@ -13,7 +13,7 @@ const saveFile = async (
 ) => {
   // Create dir if it doesn't exist
   if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir);
+    fs.mkdirSync(targetDir, { recursive: true });
   }
 
   await fs.promises.rename(
@@ -43,14 +43,18 @@ const saveFiles = async (
 };
 
 const deleteFiles = async (newFiles: string[], targetDir: string) => {
+  if (!fs.existsSync(targetDir)) {
+    return;
+  }
+
   const currentFiles = await fs.promises.readdir(targetDir);
-  currentFiles.forEach(async currentFile => {
+  for (const currentFile of currentFiles) {
     if (!fs.lstatSync(path.join(targetDir, currentFile)).isDirectory()) {
       if (!newFiles.includes(currentFile)) {
         await fs.promises.unlink(path.join(targetDir, currentFile));
       }
     }
-  });
+  }
 };
 
 /**
