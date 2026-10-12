@@ -47,5 +47,8 @@
     "vfile": "^6.0.3",
     "vfile-message": "^4.0.3",
     "vfile-reporter": "^8.1.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
   }
 }
